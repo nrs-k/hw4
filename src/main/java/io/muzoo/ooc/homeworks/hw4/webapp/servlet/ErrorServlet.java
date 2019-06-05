@@ -13,6 +13,7 @@ import java.io.IOException;
 public class ErrorServlet extends HttpServlet implements Routable {
 
     private SecurityService securityService;
+    private String mapping = "/error";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -20,14 +21,14 @@ public class ErrorServlet extends HttpServlet implements Routable {
         if(authorized) {
             response.sendRedirect("/users");
         } else {
-            RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/error.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("WEB-INF" + mapping + ".jsp");
             rd.include(request, response);
         }
     }
 
     @Override
     public String getMapping() {
-        return "/error";
+        return mapping;
     }
 
     @Override

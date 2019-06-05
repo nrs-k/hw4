@@ -5,6 +5,7 @@ import io.muzoo.ooc.homeworks.hw4.webapp.servlet.ErrorServlet;
 import io.muzoo.ooc.homeworks.hw4.webapp.servlet.HomeServlet;
 import io.muzoo.ooc.homeworks.hw4.webapp.servlet.LoginServlet;
 import io.muzoo.ooc.homeworks.hw4.webapp.servlet.UsersServlet;
+import io.muzoo.ooc.homeworks.hw4.webapp.servlet.users.AddUserServlet;
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 
@@ -21,6 +22,7 @@ public class ServletRouter {
         routables.add(LoginServlet.class);
         routables.add(UsersServlet.class);
         routables.add(ErrorServlet.class);
+        routables.add(AddUserServlet.class);
     }
 
     private SecurityService securityService;

@@ -16,10 +16,11 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet implements Routable {
 
     private SecurityService securityService;
+    private String mapping = "/login";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/login.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("WEB-INF" + mapping + ".jsp");
         rd.include(request, response);
     }
 
@@ -50,7 +51,7 @@ public class LoginServlet extends HttpServlet implements Routable {
 
     @Override
     public String getMapping() {
-        return "/login";
+        return mapping;
     }
 
     @Override
