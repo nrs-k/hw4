@@ -32,6 +32,7 @@ public class Webapp {
             e.printStackTrace();
         } catch (ServletException e) {
             e.printStackTrace();
+            System.out.println("hi");
         }
 
     }
