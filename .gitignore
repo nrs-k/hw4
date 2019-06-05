@@ -1,0 +1,9 @@
+*.iml
+/target
+/.idea
+/out
+*.DS_Store
+tomcat.8082
+/.project
+/.settings
+/.classpath
