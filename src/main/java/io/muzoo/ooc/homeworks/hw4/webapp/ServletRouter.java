@@ -1,7 +1,6 @@
 package io.muzoo.ooc.homeworks.hw4.webapp;
 
 import io.muzoo.ooc.homeworks.hw4.webapp.service.SecurityService;
-import io.muzoo.ooc.homeworks.hw4.webapp.servlet.HomeServlet;
 import io.muzoo.ooc.homeworks.hw4.webapp.servlet.LoginServlet;
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
@@ -15,7 +14,7 @@ public class ServletRouter {
     private static final List<Class<? extends Routable>> routables = new ArrayList<>();
 
     static {
-        routables.add(HomeServlet.class);
+        routables.add(UsersServlet.class);
         routables.add(LoginServlet.class);
     }
 

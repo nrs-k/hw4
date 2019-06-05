@@ -1,7 +1,6 @@
 package io.muzoo.ooc.homeworks.hw4.webapp;
 
 import io.muzoo.ooc.homeworks.hw4.webapp.service.SecurityService;
-import io.muzoo.ooc.homeworks.hw4.webapp.servlet.HomeServlet;
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
