@@ -10,6 +10,7 @@ public class SecurityService {
 
     private Map<String, String> userCredentials = new HashMap<String, String>() {{
         put("admin", "123456");
+        put("a", "b");
     }};
 
     public boolean isAuthorized(HttpServletRequest request) {
