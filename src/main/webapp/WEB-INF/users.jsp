@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -6,5 +7,17 @@
         <form action="/users" method="post">
             <input type="submit" value="Add user" name="add">
         </form>
+
+        <table id="users" border="1">
+            <tr>
+                <th>Username</th>
+            </tr>
+
+            <c:forEach var="user" items="${userList}">
+                <tr>
+                    <td>${user}</td>
+                </tr>
+            </c:forEach>
+        </table>
     </body>
 </html>

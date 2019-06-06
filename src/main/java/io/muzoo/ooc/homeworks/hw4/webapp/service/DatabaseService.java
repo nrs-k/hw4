@@ -1,8 +1,8 @@
-package io.muzoo.ooc.homeworks.hw4.webapp;
+package io.muzoo.ooc.homeworks.hw4.webapp.service;
 
 import java.sql.*;
 
-public class DatabaseConnection {
+public class DatabaseService {
 
     public static Connection initializeDatabase() {
         String dbURL = "jdbc:mysql://localhost:3307/webapp";
@@ -19,7 +19,7 @@ public class DatabaseConnection {
         return con;
     }
 
-    protected static void disconnectDb(ResultSet rs, Statement st, Connection con) {
+    public static void disconnectDb(ResultSet rs, Statement st, Connection con) {
         try {
             rs.close();
             st.close();

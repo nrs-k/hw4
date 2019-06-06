@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class SecurityService {
 
-    private UserCredentials userCredentials = new UserCredentials();
+    private UserCredentials userCredentials = UserCredentials.getInstance();
 
     public boolean isAuthorized(HttpServletRequest request) {
         String username = (String) request.getSession().getAttribute("username");

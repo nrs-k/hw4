@@ -1,15 +1,25 @@
 package io.muzoo.ooc.homeworks.hw4.webapp;
 
+import io.muzoo.ooc.homeworks.hw4.webapp.service.DatabaseService;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserCredentials {
 
-    private Connection con = null;
-    private PreparedStatement st = null;
-    private ResultSet rs = null;
+    private static UserCredentials userCredentials = new UserCredentials();
+
+    public static UserCredentials getInstance(){
+        return userCredentials;
+    }
+
+    private UserCredentials(){}
 
     public String getPassword(String username){
-        con = DatabaseConnection.initializeDatabase();
+        Connection con = DatabaseService.initializeDatabase();
+        PreparedStatement st = null;
+        ResultSet rs = null;
         try {
             st = con.prepareStatement("select * from users where username = ?");
             st.setString(1, username);
@@ -18,7 +28,7 @@ public class UserCredentials {
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
-            DatabaseConnection.disconnectDb(rs, st, con);
+            DatabaseService.disconnectDb(rs, st, con);
         }
         return null;
     }
@@ -27,4 +37,22 @@ public class UserCredentials {
         return getPassword(username) != null;
     }
 
+    public List<String> getUserList(){
+        List<String> userList = new ArrayList<>();
+        Connection con = DatabaseService.initializeDatabase();
+        Statement st = null;
+        ResultSet rs = null;
+        try{
+            st = con.createStatement();
+            rs = st.executeQuery("select  * from users");
+            while(rs.next()){
+                userList.add(rs.getString("username"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseService.disconnectDb(rs, st, con);
+        }
+        return userList;
+    }
 }
