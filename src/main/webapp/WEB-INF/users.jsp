@@ -16,6 +16,11 @@
             <c:forEach var="user" items="${userList}">
                 <tr>
                     <td>${user}</td>
+                    <td>
+                        <form action="users" method="post">
+                            <input type="submit" value="Remove" name="remove">
+                        </form>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
