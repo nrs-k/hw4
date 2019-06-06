@@ -48,6 +48,9 @@ public class UsersServlet extends HttpServlet implements Routable {
                 prepareRequestForEditUser(request);
                 RequestDispatcher rd = request.getRequestDispatcher("users/edit.jsp");
                 rd.forward(request, response);
+            } else if (request.getParameter("logout") != null) {
+                securityService.logout(request);
+                response.sendRedirect("/login");
             }
         } else {
             response.sendRedirect("/login");

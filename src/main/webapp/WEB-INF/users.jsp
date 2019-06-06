@@ -38,5 +38,10 @@
         <p>
             Current user: ${currentUser}
         </p>
+
+        <form action="users" method="post">
+            <input type="submit" value="Logout" name="logout">
+        </form>
+
     </body>
 </html>
