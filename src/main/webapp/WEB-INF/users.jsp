@@ -19,7 +19,7 @@
                     <td>
                         <form action="users" method="post">
                             <input type="hidden" name="user" value="<c:out value="${user}" />" />
-                            <input type="submit" value="Remove" name="remove">
+                            <input type="submit" value="Remove" name="remove" onclick="return confirm('Are you sure you want remove this user?')">
                         </form>
                     </td>
                 </tr>
