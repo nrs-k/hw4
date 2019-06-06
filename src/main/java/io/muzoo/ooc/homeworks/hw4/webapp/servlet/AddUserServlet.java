@@ -21,29 +21,33 @@ public class AddUserServlet extends HttpServlet implements Routable {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher(currentPath);
-        rd.include(request, response);
+        boolean authorized = securityService.isAuthorized(request);
+        if(authorized) {
+            RequestDispatcher rd = request.getRequestDispatcher(currentPath);
+            rd.include(request, response);
+        } else {
+            response.sendRedirect("/login");
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String name = request.getParameter("name");
         if (!StringUtils.isBlank(username) && !StringUtils.isBlank(password)){
-            boolean isAdded = UserService.getInstance().add(username, password);
+            boolean isAdded = UserService.getInstance().add(username, password, name);
             if(isAdded) response.sendRedirect("/users");
             else {
                 String error = "This username already exists";
                 request.setAttribute("error", error);
-                RequestDispatcher rd = request.getRequestDispatcher(currentPath);
-                rd.include(request, response);
             }
         } else {
             String error = "Username or password is missing.";
             request.setAttribute("error", error);
-            RequestDispatcher rd = request.getRequestDispatcher(currentPath);
-            rd.include(request, response);
         }
+        RequestDispatcher rd = request.getRequestDispatcher(currentPath);
+        rd.include(request, response);
     }
 
     @Override

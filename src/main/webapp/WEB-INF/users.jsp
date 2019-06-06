@@ -4,6 +4,7 @@
 <html>
     <body>
         <h2>User list</h2>
+        <p>${error}</p>
         <form action="/users" method="post">
             <input type="submit" value="Add user" name="add">
         </form>
@@ -11,14 +12,16 @@
         <table id="users" border="1">
             <tr>
                 <th>Username</th>
+                <th>Name</th>
             </tr>
 
             <c:forEach var="user" items="${userList}">
                 <tr>
-                    <td>${user}</td>
+                    <td>${user[0]}</td>
+                    <td>${user[1]}</td>
                     <td>
                         <form action="users" method="post">
-                            <input type="hidden" name="user" value="<c:out value="${user}" />" />
+                            <input type="hidden" name="user" value="<c:out value="${user[0]}" />" />
                             <input type="submit" value="Remove" name="remove" onclick="return confirm('Are you sure you want remove this user?')">
                         </form>
                     </td>

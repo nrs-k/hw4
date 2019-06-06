@@ -21,7 +21,7 @@ public class UsersServlet extends HttpServlet implements Routable {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean authorized = securityService.isAuthorized(request);
-        if(authorized) {
+        if (authorized) {
             setTable(request);
             RequestDispatcher rd = request.getRequestDispatcher(currentPath);
             rd.include(request, response);
@@ -32,18 +32,33 @@ public class UsersServlet extends HttpServlet implements Routable {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(request.getParameter("add") != null) {
-            response.sendRedirect("/add");
-        } else if(request.getParameter("remove") != null){
+        boolean authorized = securityService.isAuthorized(request);
+        if (authorized) {
+            if (request.getParameter("add") != null) {
+                response.sendRedirect("/add");
+            } else if (request.getParameter("remove") != null) {
+                removeUser(request);
+                setTable(request);
+                RequestDispatcher rd = request.getRequestDispatcher(currentPath);
+                rd.include(request, response);
+            }
+        } else {
+            response.sendRedirect("/login");
+        }
+    }
+
+    private void removeUser(HttpServletRequest request){
+        String targetUser = request.getParameter("user");
+        if (!targetUser.equals(request.getSession().getAttribute("username"))) {
             UserService.getInstance().remove(request.getParameter("user"));
-            setTable(request);
-            RequestDispatcher rd = request.getRequestDispatcher(currentPath);
-            rd.include(request, response);
+        } else {
+            String error = "You cannot remove your own username.";
+            request.setAttribute("error", error);
         }
     }
 
     private void setTable(HttpServletRequest request) {
-        List<String> userList = UserService.getInstance().getUserList();
+        List<String[]> userList = UserService.getInstance().getUserList();
         request.setAttribute("userList", userList);
     }
 

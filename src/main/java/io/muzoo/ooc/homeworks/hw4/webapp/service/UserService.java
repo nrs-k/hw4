@@ -38,14 +38,15 @@ public class UserService {
         return getPassword(username) != null;
     }
 
-    public List<String> getUserList(){
-        List<String> userList = new ArrayList<>();
+    public List<String[]> getUserList(){
+        List<String[]> userList = new ArrayList<>();
         con = DatabaseService.initializeDatabase();
         try{
             st = con.createStatement();
             rs = st.executeQuery("select  * from users");
             while(rs.next()){
-                userList.add(rs.getString("username"));
+                String[] userInfo = {rs.getString("username"), rs.getString("name")};
+                userList.add(userInfo);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,12 +71,13 @@ public class UserService {
         return deleted != 0;
     }
 
-    public boolean add(String username, String password){
+    public boolean add(String username, String password, String name){
         con = DatabaseService.initializeDatabase();
         try{
-            ps = con.prepareStatement("insert into users (username, password) values (?, ?)");
+            ps = con.prepareStatement("insert into users (username, password, name) values (?, ?, ?)");
             ps.setString(1, username);
             ps.setString(2, password);
+            ps.setString(3, name);
             ps.executeUpdate();
             return true;
         } catch (SQLIntegrityConstraintViolationException e){

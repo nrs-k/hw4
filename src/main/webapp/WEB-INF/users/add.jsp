@@ -10,6 +10,9 @@
             <br>
             Password: <br>
             <input type="password" name="password">
+            <br>
+            Name: <br>
+            <input type="password" name="name">
             <br><br>
             <input type="submit" value="Submit">
         </form>
