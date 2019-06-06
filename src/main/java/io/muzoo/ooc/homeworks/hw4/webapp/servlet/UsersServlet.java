@@ -33,8 +33,7 @@ public class UsersServlet extends HttpServlet implements Routable {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if(request.getParameter("add") != null) {
-            RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/users/add.jsp");
-            rd.include(request, response);
+            response.sendRedirect("/add");
         } else if(request.getParameter("remove") != null){
             UserService.getInstance().remove(request.getParameter("user"));
             setTable(request);

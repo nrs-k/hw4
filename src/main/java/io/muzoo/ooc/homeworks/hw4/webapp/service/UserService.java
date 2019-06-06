@@ -69,4 +69,23 @@ public class UserService {
         }
         return deleted != 0;
     }
+
+    public boolean add(String username, String password){
+        con = DatabaseService.initializeDatabase();
+        try{
+            ps = con.prepareStatement("insert into users (username, password) values (?, ?)");
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLIntegrityConstraintViolationException e){
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseService.disconnectDb(rs, ps, con);
+        }
+        return false;
+    }
+
 }

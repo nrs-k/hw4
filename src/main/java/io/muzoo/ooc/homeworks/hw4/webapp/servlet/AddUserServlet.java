@@ -2,21 +2,22 @@ package io.muzoo.ooc.homeworks.hw4.webapp.servlet;
 
 import io.muzoo.ooc.homeworks.hw4.webapp.Routable;
 import io.muzoo.ooc.homeworks.hw4.webapp.service.SecurityService;
+import io.muzoo.ooc.homeworks.hw4.webapp.service.UserService;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class LoginServlet extends HttpServlet implements Routable {
+public class AddUserServlet extends HttpServlet implements Routable {
 
     private SecurityService securityService;
-    private String mapping = "/login";
+    private String mapping = "/add";
     private String currentPath = "WEB-INF" + mapping + ".jsp";
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,10 +30,10 @@ public class LoginServlet extends HttpServlet implements Routable {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         if (!StringUtils.isBlank(username) && !StringUtils.isBlank(password)){
-            if (securityService.authenticate(username, password, request)){
-                response.sendRedirect("/users");
-            } else {
-                String error = "Wrong username or password.";
+            boolean isAdded = UserService.getInstance().add(username, password);
+            if(isAdded) response.sendRedirect("/users");
+            else {
+                String error = "This username already exists";
                 request.setAttribute("error", error);
                 RequestDispatcher rd = request.getRequestDispatcher(currentPath);
                 rd.include(request, response);
@@ -43,10 +44,6 @@ public class LoginServlet extends HttpServlet implements Routable {
             RequestDispatcher rd = request.getRequestDispatcher(currentPath);
             rd.include(request, response);
         }
-
-        // check username and password against database
-        // if valid then set username attribute to session via securityService
-        // else put error message to render error on the login form
     }
 
     @Override

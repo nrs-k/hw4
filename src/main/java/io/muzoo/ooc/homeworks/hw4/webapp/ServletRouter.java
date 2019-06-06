@@ -5,7 +5,7 @@ import io.muzoo.ooc.homeworks.hw4.webapp.servlet.ErrorServlet;
 import io.muzoo.ooc.homeworks.hw4.webapp.servlet.HomeServlet;
 import io.muzoo.ooc.homeworks.hw4.webapp.servlet.LoginServlet;
 import io.muzoo.ooc.homeworks.hw4.webapp.servlet.UsersServlet;
-import io.muzoo.ooc.homeworks.hw4.webapp.servlet.users.AddUserServlet;
+import io.muzoo.ooc.homeworks.hw4.webapp.servlet.AddUserServlet;
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 
