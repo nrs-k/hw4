@@ -25,8 +25,18 @@
                             <input type="submit" value="Remove" name="remove" onclick="return confirm('Are you sure you want remove this user?')">
                         </form>
                     </td>
+                    <td>
+                        <form action="users" method="post">
+                            <input type="hidden" name="user" value="<c:out value="${user[0]}" />" />
+                            <input type="submit" value="Edit" name="edit">
+                        </form>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
+
+        <p>
+            Current user: ${currentUser}
+        </p>
     </body>
 </html>

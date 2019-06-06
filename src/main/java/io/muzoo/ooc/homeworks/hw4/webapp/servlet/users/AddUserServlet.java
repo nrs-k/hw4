@@ -1,4 +1,4 @@
-package io.muzoo.ooc.homeworks.hw4.webapp.servlet;
+package io.muzoo.ooc.homeworks.hw4.webapp.servlet.users;
 
 import io.muzoo.ooc.homeworks.hw4.webapp.Routable;
 import io.muzoo.ooc.homeworks.hw4.webapp.service.SecurityService;
@@ -15,8 +15,8 @@ import java.io.IOException;
 public class AddUserServlet extends HttpServlet implements Routable {
 
     private SecurityService securityService;
-    private String mapping = "/add";
-    private String currentPath = "WEB-INF" + mapping + ".jsp";
+    private String mapping = "/users/add";
+    private String currentPath = "/users/add.jsp";
 
 
     @Override
@@ -36,8 +36,8 @@ public class AddUserServlet extends HttpServlet implements Routable {
         String password = request.getParameter("password");
         String name = request.getParameter("name");
         if (!StringUtils.isBlank(username) && !StringUtils.isBlank(password)){
-            boolean isAdded = UserService.getInstance().add(username, password, name);
-            if(isAdded) response.sendRedirect("/users");
+            boolean validUsername = UserService.getInstance().add(username, password, name);
+            if(validUsername) response.sendRedirect("/users");
             else {
                 String error = "This username already exists";
                 request.setAttribute("error", error);

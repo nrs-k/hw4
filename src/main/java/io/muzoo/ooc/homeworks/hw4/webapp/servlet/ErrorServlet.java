@@ -14,7 +14,7 @@ public class ErrorServlet extends HttpServlet implements Routable {
 
     private SecurityService securityService;
     private String mapping = "/error";
-    private String currentPath = "WEB-INF" + mapping + ".jsp";
+    private String currentPath = "/error.jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

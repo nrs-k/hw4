@@ -4,7 +4,7 @@
     <body>
         <h2>Add User</h2>
         <p>${error}</p>
-        <form action="/add" method="post">
+        <form action="/users/add" method="post">
             Username: <br>
             <input type="text" name="username" />
             <br>

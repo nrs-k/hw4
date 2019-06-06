@@ -14,7 +14,7 @@ public class HomeServlet extends HttpServlet implements Routable {
 
     private SecurityService securityService;
     private String mapping = "/index.jsp";
-    private String currentPath = "WEB-INF" + mapping + ".jsp";
+    private String currentPath = "/index.jsp";
 
 
     @Override

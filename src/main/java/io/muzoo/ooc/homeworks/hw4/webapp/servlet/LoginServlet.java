@@ -16,12 +16,17 @@ public class LoginServlet extends HttpServlet implements Routable {
 
     private SecurityService securityService;
     private String mapping = "/login";
-    private String currentPath = "WEB-INF" + mapping + ".jsp";
+    private String currentPath = "/login.jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher(currentPath);
-        rd.include(request, response);
+        boolean authorized = securityService.isAuthorized(request);
+        if(!authorized) {
+            RequestDispatcher rd = request.getRequestDispatcher(currentPath);
+            rd.include(request, response);
+        } else {
+            response.sendRedirect("/users");
+        }
     }
 
     @Override

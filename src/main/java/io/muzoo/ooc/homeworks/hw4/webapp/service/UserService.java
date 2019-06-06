@@ -19,13 +19,13 @@ public class UserService {
 
     private UserService(){}
 
-    public String getPassword(String username){
+    public String get(String field, String username){
         con = DatabaseService.initializeDatabase();
         try {
             ps = con.prepareStatement("select * from users where username = ?");
             ps.setString(1, username);
             rs = ps.executeQuery();
-            if(rs.next()) return rs.getString("password");
+            if(rs.next()) return rs.getString(field);
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
@@ -35,7 +35,7 @@ public class UserService {
     }
 
     public boolean hasUser(String username){
-        return getPassword(username) != null;
+        return get("name", username) != null;
     }
 
     public List<String[]> getUserList(){
@@ -80,14 +80,26 @@ public class UserService {
             ps.setString(3, name);
             ps.executeUpdate();
             return true;
-        } catch (SQLIntegrityConstraintViolationException e){
-            return false;
         } catch (SQLException e) {
-            e.printStackTrace();
+            return false;
         } finally {
             DatabaseService.disconnectDb(rs, ps, con);
         }
-        return false;
+    }
+
+    public boolean update(String field, String newValue, String username){
+        con = DatabaseService.initializeDatabase();
+        try{
+            ps = con.prepareStatement("update users set " + field + " = ? where username = ?");
+            ps.setString(1, newValue);
+            ps.setString(2, username);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        } finally {
+            DatabaseService.disconnectDb(rs, ps, con);
+        }
     }
 
 }

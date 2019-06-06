@@ -14,7 +14,7 @@ public class SecurityService {
     }
 
     public boolean authenticate(String username, String password, HttpServletRequest request) {
-        String passwordInDB = userService.getPassword(username);
+        String passwordInDB = userService.get("password", username);
         boolean isMatched = StringUtils.equals(password, passwordInDB);
         if (isMatched) {
             request.getSession().setAttribute("username", username);
