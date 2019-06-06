@@ -14,10 +14,12 @@ public class AddUserServlet extends HttpServlet implements Routable {
 
     private SecurityService securityService;
     private String mapping = "/users/add";
+    private String currentPath = "WEB-INF" + mapping + ".jsp";
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("WEB-INF" + mapping + ".jsp");
+        RequestDispatcher rd = request.getRequestDispatcher(currentPath);
         rd.include(request, response);
     }
 

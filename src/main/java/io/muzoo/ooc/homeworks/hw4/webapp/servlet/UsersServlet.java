@@ -1,7 +1,7 @@
 package io.muzoo.ooc.homeworks.hw4.webapp.servlet;
 
 import io.muzoo.ooc.homeworks.hw4.webapp.Routable;
-import io.muzoo.ooc.homeworks.hw4.webapp.UserCredentials;
+import io.muzoo.ooc.homeworks.hw4.webapp.service.UserService;
 import io.muzoo.ooc.homeworks.hw4.webapp.service.SecurityService;
 
 import javax.servlet.RequestDispatcher;
@@ -16,15 +16,15 @@ public class UsersServlet extends HttpServlet implements Routable {
 
     private SecurityService securityService;
     private String mapping = "/users";
+    private String currentPath = "WEB-INF" + mapping + ".jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean authorized = securityService.isAuthorized(request);
         if(authorized) {
-            List<String> userList = UserCredentials.getInstance().getUserList();
-            request.setAttribute("userList", userList);
-            RequestDispatcher rd = request.getRequestDispatcher("WEB-INF" + mapping + ".jsp");
-            rd.forward(request, response);
+            setTable(request);
+            RequestDispatcher rd = request.getRequestDispatcher(currentPath);
+            rd.include(request, response);
         } else {
             response.sendRedirect("/login");
         }
@@ -35,7 +35,17 @@ public class UsersServlet extends HttpServlet implements Routable {
         if(request.getParameter("add") != null) {
             RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/users/add.jsp");
             rd.include(request, response);
+        } else if(request.getParameter("remove") != null){
+            UserService.getInstance().remove(request.getParameter("user"));
+            setTable(request);
+            RequestDispatcher rd = request.getRequestDispatcher(currentPath);
+            rd.include(request, response);
         }
+    }
+
+    private void setTable(HttpServletRequest request) {
+        List<String> userList = UserService.getInstance().getUserList();
+        request.setAttribute("userList", userList);
     }
 
     @Override

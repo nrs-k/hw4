@@ -13,6 +13,9 @@ import java.io.IOException;
 public class HomeServlet extends HttpServlet implements Routable {
 
     private SecurityService securityService;
+    private String mapping = "/index.jsp";
+    private String currentPath = "WEB-INF" + mapping + ".jsp";
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -14,6 +14,7 @@ public class ErrorServlet extends HttpServlet implements Routable {
 
     private SecurityService securityService;
     private String mapping = "/error";
+    private String currentPath = "WEB-INF" + mapping + ".jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -21,7 +22,7 @@ public class ErrorServlet extends HttpServlet implements Routable {
         if(authorized) {
             response.sendRedirect("/users");
         } else {
-            RequestDispatcher rd = request.getRequestDispatcher("WEB-INF" + mapping + ".jsp");
+            RequestDispatcher rd = request.getRequestDispatcher(currentPath);
             rd.include(request, response);
         }
     }

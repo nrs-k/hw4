@@ -21,9 +21,9 @@ public class DatabaseService {
 
     public static void disconnectDb(ResultSet rs, Statement st, Connection con) {
         try {
-            rs.close();
-            st.close();
-            con.close();
+            if(rs!= null) rs.close();
+            if(st!= null) st.close();
+            if(con!= null) con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
