@@ -1,5 +1,7 @@
 package io.muzoo.ooc.homeworks.hw4.webapp.service;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,10 +75,11 @@ public class UserService {
 
     public boolean add(String username, String password, String name){
         con = DatabaseService.initializeDatabase();
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
         try{
             ps = con.prepareStatement("insert into users (username, password, name) values (?, ?, ?)");
             ps.setString(1, username);
-            ps.setString(2, password);
+            ps.setString(2, hashedPassword);
             ps.setString(3, name);
             ps.executeUpdate();
             return true;

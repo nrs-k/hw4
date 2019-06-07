@@ -1,6 +1,6 @@
 package io.muzoo.ooc.homeworks.hw4.webapp.service;
 
-import org.apache.commons.lang.StringUtils;
+import org.mindrot.jbcrypt.BCrypt;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,10 +15,12 @@ public class SecurityService {
 
     public boolean authenticate(String username, String password, HttpServletRequest request) {
         String passwordInDB = userService.get("password", username);
-        boolean isMatched = StringUtils.equals(password, passwordInDB);
-        if (isMatched) {
-            request.getSession().setAttribute("username", username);
-            return true;
+        if(passwordInDB != null) {
+            boolean isMatched = BCrypt.checkpw(password, userService.get("password", username));
+            if (isMatched) {
+                request.getSession().setAttribute("username", username);
+                return true;
+            }
         }
         return false;
     }
@@ -26,4 +28,5 @@ public class SecurityService {
     public void logout(HttpServletRequest request) {
         request.getSession().invalidate();
     }
+
 }
