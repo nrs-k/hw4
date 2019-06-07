@@ -1,7 +1,5 @@
 package io.muzoo.ooc.homeworks.hw4.webapp.service;
 
-import org.mindrot.jbcrypt.BCrypt;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +19,15 @@ public class UserService {
 
     private UserService(){}
 
-    public String get(String field, String username){
+    public String getPassword(String username) {
+        return getFromDB("password", username);
+    }
+
+    public String getName(String username) {
+        return getFromDB("name", username);
+    }
+
+    private String getFromDB(String field, String username){
         con = DatabaseService.initializeDatabase();
         try {
             ps = con.prepareStatement("select * from users where username = ?");
@@ -37,7 +43,7 @@ public class UserService {
     }
 
     public boolean hasUser(String username){
-        return get("name", username) != null;
+        return (getFromDB("username", username) != null);
     }
 
     public List<String[]> getUserList(){
@@ -75,7 +81,7 @@ public class UserService {
 
     public boolean add(String username, String password, String name){
         con = DatabaseService.initializeDatabase();
-        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
+        String hashedPassword = SecurityService.generateHash(password);
         try{
             ps = con.prepareStatement("insert into users (username, password, name) values (?, ?, ?)");
             ps.setString(1, username);

@@ -14,9 +14,9 @@ public class SecurityService {
     }
 
     public boolean authenticate(String username, String password, HttpServletRequest request) {
-        String passwordInDB = userService.get("password", username);
+        String passwordInDB = userService.getPassword(username);
         if(passwordInDB != null) {
-            boolean isMatched = BCrypt.checkpw(password, userService.get("password", username));
+            boolean isMatched = BCrypt.checkpw(password, passwordInDB);
             if (isMatched) {
                 request.getSession().setAttribute("username", username);
                 return true;
@@ -27,6 +27,10 @@ public class SecurityService {
 
     public void logout(HttpServletRequest request) {
         request.getSession().invalidate();
+    }
+
+    public static String generateHash(String password){
+        return BCrypt.hashpw(password, BCrypt.gensalt(12));
     }
 
 }

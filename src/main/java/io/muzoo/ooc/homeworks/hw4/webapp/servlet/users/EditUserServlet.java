@@ -44,7 +44,7 @@ public class EditUserServlet extends HttpServlet implements Routable {
             String error = "This username already exists.";
             request.setAttribute("error", error);
             request.setAttribute("currentUsername", targetUser);
-            request.setAttribute("currentName", userService.get("name", targetUser));
+            request.setAttribute("currentName", userService.getName(targetUser));
             RequestDispatcher rd = request.getRequestDispatcher(currentPath);
             rd.include(request, response);
 
