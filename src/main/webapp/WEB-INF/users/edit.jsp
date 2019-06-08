@@ -8,11 +8,7 @@
             font: normal normal bold 20px/1.4em opensanshebrewcondensed-regular,sans-serif ;
             color:rgb(137, 173, 216);
             text-align: center;
-        }
-
-        .error {
-            font:normal normal normal 15px/1.4em avenir-lt-w01_35-light1475496,sans-serif;
-            color: rgb(255, 109, 109);
+            letter-spacing: 0.1em;
         }
 
         .button {
@@ -29,7 +25,7 @@
 
         .textbox {
             display:flex;
-            margin: 25px 0 25px 0;
+            margin: 20px 0 25px 0;
         }
         .input-textbox {
             font:normal normal normal 14px/1.4em avenir-lt-w01_35-light1475496,sans-serif;
@@ -73,7 +69,7 @@
         <form action="/users/edit" method="post">
             <div class="block">
                 <div class="textbox" style="width:300px;height:43px;">
-                    <input type="text" name="newName" placeholder=${currentName} style="padding-left:14px" class="has-custom-focus input-textbox">
+                    <input type="text" name="newName" placeholder=${currentName} style="padding-left:14px" class="input-textbox">
                 </div>
             </div>
             <div class="block">
@@ -83,9 +79,6 @@
         </form>
     </div>
 
-    <div class="error block">
-        <p> ${error} </p>
-    </div>
 </div>
 </body>
 </html>

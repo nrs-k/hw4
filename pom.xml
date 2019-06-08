@@ -68,44 +68,43 @@
     </dependencies>
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>appassembler-maven-plugin</artifactId>
-                <version>2.0.0</version>
-                <configuration>
-                    <assembleDirectory>target</assembleDirectory>
-                    <programs>
-                        <program>
-                            <mainClass>io.muzoo.ooc.homeworks.hw4.webapp.Webapp</mainClass>
-                            <name>webapp</name>
-                        </program>
-                    </programs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>assemble</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.codehaus.mojo</groupId>-->
+<!--                <artifactId>appassembler-maven-plugin</artifactId>-->
+<!--                <version>2.0.0</version>-->
+<!--                <configuration>-->
+<!--                    <assembleDirectory>target</assembleDirectory>-->
+<!--                    <programs>-->
+<!--                        <program>-->
+<!--                            <mainClass>io.muzoo.ooc.homeworks.hw4.webapp.Webapp</mainClass>-->
+<!--                            <name>webapp</name>-->
+<!--                        </program>-->
+<!--                    </programs>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>assemble</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.0</version>
                 <executions>
                     <execution>
-                        <id>build-exec-war</id>
+                        <id>tomcat-run</id>
+                        <goals>
+                            <goal>exec-war-only</goal>
+                        </goals>
+                        <phase>package</phase>
                         <configuration>
-                            <path>/app/v1</path>
-                            <mainClass>org.apache.tomcat.maven.runner.Tomcat8RunnerCli</mainClass>
-                            <extraDependencies>
-                                <extraDependency>
-                                    <groupId>com.nitorcreations</groupId>
-                                    <artifactId>tomcat8-war-runner</artifactId>
-                                    <version>1.0</version>
-                                </extraDependency>
-                            </extraDependencies>
+                            <path>/application</path>
+                            <enableNaming>false</enableNaming>
+                            <finalName>application.jar</finalName>
                         </configuration>
                     </execution>
                 </executions>

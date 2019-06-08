@@ -46,7 +46,7 @@ public class AddUserServlet extends HttpServlet implements Routable {
                     response.sendRedirect("/users");
                 }
                 else {
-                    request.setAttribute("error", "This username already exists");
+                    request.setAttribute("error", "This username already exists.");
                 }
             }
         } else {
