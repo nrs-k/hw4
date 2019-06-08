@@ -36,14 +36,12 @@ public class LoginServlet extends HttpServlet implements Routable {
             if (securityService.authenticate(username, password, request)){
                 response.sendRedirect("/users");
             } else {
-                String error = "Wrong username or password.";
-                request.setAttribute("error", error);
+                request.setAttribute("error", "Wrong username or password.");
                 RequestDispatcher rd = request.getRequestDispatcher(currentPath);
                 rd.include(request, response);
             }
         } else {
-            String error = "Username or password is missing.";
-            request.setAttribute("error", error);
+            request.setAttribute("error", "Username or password is missing.");
             RequestDispatcher rd = request.getRequestDispatcher(currentPath);
             rd.include(request, response);
         }

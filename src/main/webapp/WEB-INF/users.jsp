@@ -15,19 +15,19 @@
                 <th>Name</th>
             </tr>
 
-            <c:forEach var="user" items="${userList}">
+            <c:forEach var="user" items="${users}">
                 <tr>
-                    <td>${user[0]}</td>
-                    <td>${user[1]}</td>
+                    <td>${user.username}</td>
+                    <td>${user.name}</td>
                     <td>
                         <form action="users" method="post">
-                            <input type="hidden" name="user" value="<c:out value="${user[0]}" />" />
+                            <input type="hidden" name="user" value="<c:out value="${user.username}" />" />
                             <input type="submit" value="Remove" name="remove" onclick="return confirm('Are you sure you want remove this user?')">
                         </form>
                     </td>
                     <td>
                         <form action="users" method="post">
-                            <input type="hidden" name="user" value="<c:out value="${user[0]}" />" />
+                            <input type="hidden" name="user" value="<c:out value="${user.username}" />" />
                             <input type="submit" value="Edit" name="edit">
                         </form>
                     </td>

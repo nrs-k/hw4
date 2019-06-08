@@ -29,26 +29,10 @@ public class EditUserServlet extends HttpServlet implements Routable {
         String targetUser = (String) request.getSession().getAttribute("targetUser");
         boolean validInput = true;
         if (request.getParameter("save") != null) {
-            String newUsername = request.getParameter("newUsername");
             String newName = request.getParameter("newName");
-            if (!StringUtils.isBlank(newUsername)) {
-                validInput = userService.update("username", newUsername, targetUser);
-            }
-            if (!StringUtils.isBlank(newName)) userService.update("name", newName, targetUser);
+            if (!StringUtils.isBlank(newName)) userService.updateUser(targetUser, "name", newName);
         }
-
-        if (validInput) {
-            response.sendRedirect("/users");
-        } else {
-
-            String error = "This username already exists.";
-            request.setAttribute("error", error);
-            request.setAttribute("currentUsername", targetUser);
-            request.setAttribute("currentName", userService.getName(targetUser));
-            RequestDispatcher rd = request.getRequestDispatcher(currentPath);
-            rd.include(request, response);
-
-        }
+        response.sendRedirect("/users");
     }
 
     @Override

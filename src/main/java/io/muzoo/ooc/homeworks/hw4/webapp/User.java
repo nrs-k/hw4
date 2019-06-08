@@ -15,10 +15,6 @@ public class User {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getHashedPassword() {
         return hashedPassword;
     }
@@ -27,7 +23,16 @@ public class User {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void update(String field, String newValue){
+        switch (field){
+            case "username":
+                username = newValue;
+                break;
+            case "name":
+                name = newValue;
+                break;
+            default:
+                break;
+        }
     }
 }

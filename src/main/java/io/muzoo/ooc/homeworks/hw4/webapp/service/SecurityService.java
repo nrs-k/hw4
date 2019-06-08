@@ -14,12 +14,14 @@ public class SecurityService {
     }
 
     public boolean authenticate(String username, String password, HttpServletRequest request) {
-        String passwordInDB = userService.getPassword(username);
-        if(passwordInDB != null) {
-            boolean isMatched = BCrypt.checkpw(password, passwordInDB);
-            if (isMatched) {
-                request.getSession().setAttribute("username", username);
-                return true;
+        if (userService.hasUser(username)) {
+            String passwordInDB = userService.getHashedPassword(username);
+            if (passwordInDB != null) {
+                boolean isMatched = BCrypt.checkpw(password, passwordInDB);
+                if (isMatched) {
+                    request.getSession().setAttribute("username", username);
+                    return true;
+                }
             }
         }
         return false;

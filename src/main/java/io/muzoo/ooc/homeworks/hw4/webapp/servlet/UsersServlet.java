@@ -1,6 +1,7 @@
 package io.muzoo.ooc.homeworks.hw4.webapp.servlet;
 
 import io.muzoo.ooc.homeworks.hw4.webapp.Routable;
+import io.muzoo.ooc.homeworks.hw4.webapp.User;
 import io.muzoo.ooc.homeworks.hw4.webapp.service.UserService;
 import io.muzoo.ooc.homeworks.hw4.webapp.service.SecurityService;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 public class UsersServlet extends HttpServlet implements Routable {
@@ -59,15 +61,18 @@ public class UsersServlet extends HttpServlet implements Routable {
 
     private void prepareRequestForEditUser(HttpServletRequest request){
         String targetUser = request.getParameter("user");
+        String currentName = userService.getName(targetUser);
         request.getSession().setAttribute("targetUser", targetUser);
         request.setAttribute("currentUsername", targetUser);
-        request.setAttribute("currentName", userService.getName(targetUser));
+        if(currentName != null) {
+            request.setAttribute("currentName", currentName);
+        }
     }
 
     private void removeUser(HttpServletRequest request){
         String targetUser = request.getParameter("user");
         if (!targetUser.equals(request.getSession().getAttribute("username"))) {
-            userService.remove(request.getParameter("user"));
+            userService.removeUser(request.getParameter("user"));
         } else {
             String error = "You cannot remove your own username.";
             request.setAttribute("error", error);
@@ -75,8 +80,8 @@ public class UsersServlet extends HttpServlet implements Routable {
     }
 
     private void setTable(HttpServletRequest request) {
-        List<String[]> userList = userService.getUserList();
-        request.setAttribute("userList", userList);
+        List<User> userList = userService.getUsers();
+        request.setAttribute("users", userList);
     }
 
     @Override
