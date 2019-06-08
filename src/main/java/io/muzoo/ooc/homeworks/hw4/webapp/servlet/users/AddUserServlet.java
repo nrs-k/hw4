@@ -18,6 +18,7 @@ public class AddUserServlet extends HttpServlet implements Routable {
     private String mapping = "/users/add";
     private String currentPath = "/users/add.jsp";
 
+    private UserService userService = UserService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,15 +37,17 @@ public class AddUserServlet extends HttpServlet implements Routable {
         String password = request.getParameter("password");
         String name = request.getParameter("name");
         if (!StringUtils.isBlank(username) && !StringUtils.isBlank(password)){
-            boolean validUsername = UserService.getInstance().add(username, password, name);
-            if(validUsername) response.sendRedirect("/users");
-            else {
-                String error = "This username already exists";
-                request.setAttribute("error", error);
+            if (username.length() > 8) {
+                request.setAttribute("error", "The username must not be longer than 8 characters.");
+            } else {
+                boolean notDuplicate = userService.addUser(username, password, name);
+                if (notDuplicate) response.sendRedirect("/users");
+                else {
+                    request.setAttribute("error", "This username already exists");
+                }
             }
         } else {
-            String error = "Username or password is missing.";
-            request.setAttribute("error", error);
+            request.setAttribute("error", "Username or password is missing.");
         }
         RequestDispatcher rd = request.getRequestDispatcher(currentPath);
         rd.include(request, response);

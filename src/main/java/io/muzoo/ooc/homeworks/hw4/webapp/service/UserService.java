@@ -1,15 +1,13 @@
 package io.muzoo.ooc.homeworks.hw4.webapp.service;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import io.muzoo.ooc.homeworks.hw4.webapp.User;
+
+import java.util.*;
 
 public class UserService {
 
-    private Connection con;
-    private Statement st;
-    private PreparedStatement ps;
-    private ResultSet rs;
+    private DatabaseService databaseService = new DatabaseService();
+    private Map<String, User> users = new HashMap<>();
 
     private static UserService userService = new UserService();
 
@@ -17,98 +15,43 @@ public class UserService {
         return userService;
     }
 
-    private UserService(){}
+    private UserService(){
+        List<User> userList = databaseService.getUserList();
+        for (User user : userList){
+            users.put(user.getUsername(), user);
+        }
+    }
 
-    public String getPassword(String username) {
-        return getFromDB("password", username);
+    public String getHashedPassword(String username) {
+        return users.get(username).getHashedPassword();
     }
 
     public String getName(String username) {
-        return getFromDB("name", username);
-    }
-
-    private String getFromDB(String field, String username){
-        con = DatabaseService.initializeDatabase();
-        try {
-            ps = con.prepareStatement("select * from users where username = ?");
-            ps.setString(1, username);
-            rs = ps.executeQuery();
-            if(rs.next()) return rs.getString(field);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            DatabaseService.disconnectDb(rs, ps, con);
-        }
-        return null;
+        return users.get(username).getName();
     }
 
     public boolean hasUser(String username){
-        return (getFromDB("username", username) != null);
+        return users.get(username) != null;
     }
 
-    public List<String[]> getUserList(){
-        List<String[]> userList = new ArrayList<>();
-        con = DatabaseService.initializeDatabase();
-        try{
-            st = con.createStatement();
-            rs = st.executeQuery("select  * from users");
-            while(rs.next()){
-                String[] userInfo = {rs.getString("username"), rs.getString("name")};
-                userList.add(userInfo);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DatabaseService.disconnectDb(rs, st, con);
-        }
-        return userList;
-    }
-
-    public boolean remove(String username){
-        con = DatabaseService.initializeDatabase();
-        int deleted = 0;
-        try{
-            ps = con.prepareStatement("delete from users where username = ?");
-            ps.setString(1, username);
-            deleted = ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DatabaseService.disconnectDb(rs, ps, con);
-        }
-        return deleted != 0;
-    }
-
-    public boolean add(String username, String password, String name){
-        con = DatabaseService.initializeDatabase();
+    public boolean addUser(String username, String password, String name){
         String hashedPassword = SecurityService.generateHash(password);
-        try{
-            ps = con.prepareStatement("insert into users (username, password, name) values (?, ?, ?)");
-            ps.setString(1, username);
-            ps.setString(2, hashedPassword);
-            ps.setString(3, name);
-            ps.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            return false;
-        } finally {
-            DatabaseService.disconnectDb(rs, ps, con);
-        }
+        users.put(username, new User(username, hashedPassword, name));
+        return databaseService.add(username, hashedPassword, name);
     }
 
-    public boolean update(String field, String newValue, String username){
-        con = DatabaseService.initializeDatabase();
-        try{
-            ps = con.prepareStatement("update users set " + field + " = ? where username = ?");
-            ps.setString(1, newValue);
-            ps.setString(2, username);
-            ps.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            return false;
-        } finally {
-            DatabaseService.disconnectDb(rs, ps, con);
-        }
+    public boolean removeUser(String username){
+        users.remove(username);
+        return databaseService.remove(username);
+    }
+
+    public boolean updateUser(String username, String field, String newValue){
+        users.get(username).update(field, newValue);
+        return databaseService.update(username, field, newValue);
+    }
+
+    public List<User> getUsers(){
+        return new ArrayList<>(users.values());
     }
 
 }
