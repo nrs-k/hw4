@@ -12,7 +12,7 @@ public class Webapp {
 
     public static void main(String[] args) {
 
-        File docBase = new File("src/main/webapp/WEB-INF");
+        File docBase = new File("src/main/webapp/WEB-INF/");
         docBase.mkdirs();
         Tomcat tomcat = new Tomcat();
         tomcat.setPort(8082);
@@ -24,6 +24,7 @@ public class Webapp {
         Context ctx;
         try{
             ctx = tomcat.addWebapp("", docBase.getAbsolutePath());
+            ctx.setAltDDName("src/main/webapp/WEB-INF/web.xml");
             servletRouter.init(ctx);
 
             tomcat.start();
