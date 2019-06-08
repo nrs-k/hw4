@@ -2,6 +2,6 @@
 
 <html>
     <body>
-        <h2>Error, URL does not exist.</h2>
+        <h2>404 error</h2>
     </body>
 </html>

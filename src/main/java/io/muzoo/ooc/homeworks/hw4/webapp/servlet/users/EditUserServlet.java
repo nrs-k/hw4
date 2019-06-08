@@ -27,7 +27,6 @@ public class EditUserServlet extends HttpServlet implements Routable {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String targetUser = (String) request.getSession().getAttribute("targetUser");
-        boolean validInput = true;
         if (request.getParameter("save") != null) {
             String newName = request.getParameter("newName");
             if (!StringUtils.isBlank(newName)) userService.updateUser(targetUser, "name", newName);

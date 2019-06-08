@@ -72,21 +72,23 @@
         <div class="header block">
             <h1>Login</h1>
         </div>
-        <form action="/login" method="post">
-            <div class="block">
-                <div class="textbox" style="width:304px;height:43px;">
-                    <input type="text" name="username" style="padding-left:14px" placeholder="username" class="has-custom-focus input-textbox">
+        <div>
+            <form action="/login" method="post">
+                <div class="block">
+                    <div class="textbox" style="width:304px;height:43px;">
+                        <input type="text" name="username" style="padding-left:14px" placeholder="username" class="has-custom-focus input-textbox">
+                    </div>
                 </div>
-            </div>
-            <div class="block">
-                <div class="textbox" style="width:304px;height:43px;">
-                    <input type="text" name="password" style="padding-left:14px" placeholder="password" class="has-custom-focus input-textbox">
+                <div class="block">
+                    <div class="textbox" style="width:304px;height:43px;">
+                        <input type="text" name="password" style="padding-left:14px" placeholder="password" class="has-custom-focus input-textbox">
+                    </div>
                 </div>
-            </div>
-            <div class="block">
-                <input type="submit" class="button" value="Login"></input>
-            </div>
-        </form>
+                <div class="block">
+                    <input type="submit" class="button" value="Login"></input>
+                </div>
+            </form>
+        </div>
         <div class="error block">
             <p> ${error} </p>
         </div>

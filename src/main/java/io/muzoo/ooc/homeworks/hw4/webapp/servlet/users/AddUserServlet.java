@@ -40,8 +40,11 @@ public class AddUserServlet extends HttpServlet implements Routable {
             if (username.length() > 8) {
                 request.setAttribute("error", "The username must not be longer than 8 characters.");
             } else {
+                if(StringUtils.isBlank(name)) name = "n/a";
                 boolean notDuplicate = userService.addUser(username, password, name);
-                if (notDuplicate) response.sendRedirect("/users");
+                if (notDuplicate){
+                    response.sendRedirect("/users");
+                }
                 else {
                     request.setAttribute("error", "This username already exists");
                 }

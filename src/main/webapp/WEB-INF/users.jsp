@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
+<div>
 <style>
     table {
         border-collapse: collapse;
@@ -60,6 +61,7 @@
         padding-top: 25px;
     }
 </style>
+</div>
 
 <body>
 <div>

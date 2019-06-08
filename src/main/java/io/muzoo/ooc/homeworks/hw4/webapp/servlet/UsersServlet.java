@@ -64,9 +64,7 @@ public class UsersServlet extends HttpServlet implements Routable {
         String currentName = userService.getName(targetUser);
         request.getSession().setAttribute("targetUser", targetUser);
         request.setAttribute("currentUsername", targetUser);
-        if(currentName != null) {
-            request.setAttribute("currentName", currentName);
-        }
+        request.setAttribute("currentName", currentName);
     }
 
     private void removeUser(HttpServletRequest request){
