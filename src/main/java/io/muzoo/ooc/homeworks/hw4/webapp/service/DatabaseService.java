@@ -5,6 +5,7 @@ import io.muzoo.ooc.homeworks.hw4.webapp.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class DatabaseService {
 
@@ -16,7 +17,20 @@ public class DatabaseService {
     protected DatabaseService(){}
 
     private Connection initializeDatabase() {
-        String dbURL = "jdbc:mysql://localhost:3307/webapp";
+        String HOSTNAME = Optional
+                .ofNullable(System.getenv("DATABASE_HOSTNAME"))
+                .orElse("localhost");
+        String PORT = Optional
+                .ofNullable(System.getenv("DATABASE_PORT"))
+                .orElse("3307");
+
+        System.out.println(HOSTNAME);
+        System.out.println(PORT);
+        String dbURL = "jdbc:mysql://" + HOSTNAME + ":" + PORT + "/webapp";
+
+        System.out.println("DATABASE");
+        System.out.println(dbURL);
+
         String dbUsername = "root";
         String dbPassword = "123456";
 
