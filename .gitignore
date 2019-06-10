@@ -1,4 +1,5 @@
 *.iml
+!target/webapp-1.0-SNAPSHOT.jar
 /target
 /.idea
 /out
